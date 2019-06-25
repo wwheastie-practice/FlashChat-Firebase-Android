@@ -1,6 +1,7 @@
 package com.whitneyheastie.flashchatnewfirebase;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -51,6 +52,10 @@ public class LoginActivity extends AppCompatActivity {
 
         // TODO: Grab an instance of FirebaseAuth
         mAuth = FirebaseAuth.getInstance();
+
+        //Testing
+        mEmailView.setText("will80@gmail.com");
+        mPasswordView.setText("123456");
     }
 
     // Executed when Sign in button pressed
@@ -69,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
     // TODO: Complete the attemptLogin() method
     private void attemptLogin() {
 
-        String email = mEmailView.getText().toString();
+        final String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         if(email.equals("") || password.equals("")) {
@@ -86,6 +91,8 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("FlashChat", "Problem signing in: ", task.getException());
                         showErrorDialog("There was problem signing in");
                     } else {
+                        SharedPreferences preferences = getSharedPreferences(RegisterActivity.CHAT_PREFS, MODE_PRIVATE);
+                        preferences.edit().putString(RegisterActivity.DISPLAY_NAME_KEY, mEmailView.getText().toString());
                         Intent intent = new Intent(LoginActivity.this, MainChatActivity.class);
                         finish();
                         startActivity(intent);

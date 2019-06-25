@@ -72,7 +72,7 @@ public class MainChatActivity extends AppCompatActivity {
         String input = mInputText.getText().toString();
         if(!input.equals("")) {
             InstantMessage chat = new InstantMessage(input, mDisplayName);
-            Exception e = mDatabaseReference.child("messages").push().setValue(chat).getException();
+            mDatabaseReference.child("messages").push().setValue(chat);
             mInputText.setText("");
         }
     }
